@@ -1,17 +1,21 @@
 package storage
 
 import (
+	"context"
 	"crypto/sha1"
+	"errors"
 	"io"
 
 	"github.com/lysenkopavlo/telegram-bot/internal/helpers/e"
 )
 
+var ErrNoSavedPages = errors.New("no saved pages")
+
 type Storage interface {
-	Save(*Page) error
-	PickRandom(string) (*Page, error)
-	Remove(*Page) error
-	IsExists(*Page) (bool, error)
+	Save(context.Context, *Page) error
+	PickRandom(context.Context, string) (*Page, error)
+	Remove(context.Context, *Page) error
+	IsExists(context.Context, *Page) (bool, error)
 }
 
 type Page struct {
