@@ -17,8 +17,6 @@ const (
 	defaultPermission = 0774 // everyone can read and write
 )
 
-var ErrNoSavedPages = errors.New("no saved pages")
-
 type Storage struct {
 	basePath string
 }
@@ -74,7 +72,7 @@ func (s Storage) PickRandom(userName string) (*storage.Page, error) {
 	}
 
 	if len(files) == 0 {
-		return nil, e.WrapError("There is no files: %w", ErrNoSavedPages)
+		return nil, e.WrapError("There is no files: %w", storage.ErrNoSavedPages)
 	}
 
 	source := rand.NewSource(time.Now().UnixNano())

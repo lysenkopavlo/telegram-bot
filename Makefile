@@ -1,7 +1,7 @@
 BINARY_NAME=telegram_bot
 
 build:
-	GOARCH=amd64 GOOS=linux go build -o ./bin/${BINARY_NAME}-linux 
+	GOARCH=amd64 GOOS=linux go build -o ./bin/${BINARY_NAME}-linux ./cmd/gobot
 
 run: build
 	./bin/${BINARY_NAME}-linux

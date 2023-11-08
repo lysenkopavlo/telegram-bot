@@ -11,6 +11,7 @@ import (
 	"github.com/lysenkopavlo/telegram-bot/internal/storage"
 )
 
+// commands are:
 const (
 	RndCmd       = "/rnd"
 	HelpCmd      = "/help"
@@ -27,7 +28,7 @@ func (p *Processor) doCmd(chatID int, text, username string) error {
 			slog.String("text is: ", text),
 			slog.String("from user: ", username)))
 
-	if isItAddCommand(text) {
+	if isAddCommand(text) {
 		slog.Info("Page is saved")
 		return p.savePage(chatID, text, username)
 	}
@@ -110,7 +111,7 @@ func (p *Processor) sendHello(chatID int) error {
 	return p.tgClient.SendMessage(chatID, msgHello)
 }
 
-func isItAddCommand(text string) bool {
+func isAddCommand(text string) bool {
 	return isItURL(text)
 }
 

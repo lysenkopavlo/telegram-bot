@@ -87,8 +87,8 @@ func (c *Client) doRequest(method string, query url.Values) ([]byte, error) {
 	return body, nil
 }
 
-func New(host string, token string) Client {
-	return Client{
+func New(host string, token string) *Client {
+	return &Client{
 		host:     host,
 		basePath: newBasePath(token),
 		client:   http.Client{},

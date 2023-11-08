@@ -19,7 +19,7 @@ type Processor struct {
 func New(client *telegram.Client, storage storage.Storage) *Processor {
 	return &Processor{
 		tgClient: client,
-		storage:  storage,
+		//storage:  storage,
 	}
 }
 
@@ -56,6 +56,7 @@ func (p *Processor) processMessage(event events.Event) error {
 		slog.Error("doCmd func worked unexpectedly", "error: ", err)
 		return e.WrapError(errMsg, err)
 	}
+	slog.Info("Message processed correctly")
 	return nil
 }
 
@@ -65,6 +66,8 @@ func meta(event events.Event) (Meta, error) {
 		slog.Error(ErrUnknownMetaType.Error())
 		return Meta{}, e.WrapError("can't get meta information", ErrUnknownMetaType)
 	}
+
+	slog.Info("Even is of type of Meta")
 	return res, nil
 }
 
