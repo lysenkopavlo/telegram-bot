@@ -1,7 +1,7 @@
-BINARY_NAME=goperson
+BINARY_NAME=telegram_bot
 
 build:
-	GOARCH=amd64 GOOS=linux go build -o ./bin/${BINARY_NAME}-linux ./cmd/go/ 
+	GOARCH=amd64 GOOS=linux go build -o ./bin/${BINARY_NAME}-linux 
 
 run: build
 	./bin/${BINARY_NAME}-linux
@@ -10,7 +10,7 @@ clean:
 	go clean
 	rm ./bin/${BINARY_NAME}-linux
 
-dep:s
+dep:
 	go mod download
 
 vet:
