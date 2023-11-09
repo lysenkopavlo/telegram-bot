@@ -24,4 +24,4 @@ and then:
 make run
 ```
 
-[Main source of knowledge]("https://youtube.com/playlist?list=PLFAQFisfyqlWDwouVTUztKX2wUjYQ4T3l&si=9waJt6hZlUqcO1iz")
+[original]("https://youtube.com/playlist?list=PLFAQFisfyqlWDwouVTUztKX2wUjYQ4T3l&si=9waJt6hZlUqcO1iz")
