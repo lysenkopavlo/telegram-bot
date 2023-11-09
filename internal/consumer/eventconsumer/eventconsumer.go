@@ -40,7 +40,7 @@ func (c *Consumer) Start() error {
 			continue
 		}
 
-		if err := c.handleEvents(gotEvents...); err != nil {
+		if err := c.handleEvents(gotEvents); err != nil {
 			slog.Error(err.Error())
 			continue
 		}
@@ -48,7 +48,7 @@ func (c *Consumer) Start() error {
 
 }
 
-func (c *Consumer) handleEvents(events ...events.Event) error {
+func (c *Consumer) handleEvents(events []events.Event) error {
 	for _, event := range events {
 		slog.Info("Got new:", "event", event.Text)
 

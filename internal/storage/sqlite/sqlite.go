@@ -29,7 +29,7 @@ func New(path string) (*Storage, error) {
 		return nil, e.WrapError(msgDbError, err)
 	}
 
-	slog.Info("Successfully connected to db")
+	slog.Info("Successfully created connection pull")
 	return &Storage{
 		db: db,
 	}, nil
@@ -112,10 +112,10 @@ func (s *Storage) IsExists(ctx context.Context, p *storage.Page) (bool, error) {
 	err := s.db.QueryRowContext(ctx, query, p.URL, p.UserName).Scan(&count)
 	if err != nil {
 		slog.Error("database insertion", "error", err)
-		return false, err
+		return false, storage.ErrNoSavedPages
 	}
 
-	slog.Info("Successfully removed page")
+	slog.Info("IsExist function worked as expected")
 
 	return count > 0, nil
 }

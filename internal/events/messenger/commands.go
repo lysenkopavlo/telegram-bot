@@ -3,6 +3,7 @@ package messenger
 import (
 	"context"
 	"errors"
+	"log"
 	"log/slog"
 	"net/url"
 	"strings"
@@ -23,13 +24,13 @@ const (
 func (p *Processor) doCmd(chatID int, text, username string) error {
 	text = strings.TrimSpace(text)
 
-	slog.Info("Received command",
+	slog.Info("Received",
 		slog.Group("User",
-			slog.String("text is: ", text),
-			slog.String("from user: ", username)))
+			slog.String("from user: ", username),
+			slog.String("text is: ", text)))
 
 	if isAddCommand(text) {
-		slog.Info("Page is saved")
+		slog.Info("Saving page...")
 		return p.savePage(chatID, text, username)
 	}
 
@@ -55,6 +56,8 @@ func (p *Processor) savePage(chatID int, pageURL, username string) error {
 		URL:      pageURL,
 		UserName: username,
 	}
+
+	log.Printf("%#v\n%v", page, page == nil)
 
 	pageIsExists, err := p.storage.IsExists(context.Background(), page)
 	if err != nil {

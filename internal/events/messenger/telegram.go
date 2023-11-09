@@ -36,7 +36,7 @@ var (
 func (p *Processor) Process(event events.Event) error {
 	switch event.Type {
 	case events.Message:
-		slog.Info("the event is of type Message")
+		slog.Info("Event is of type Message")
 		return p.processMessage(event)
 	default:
 		slog.Error("unknown type of event")
@@ -45,6 +45,8 @@ func (p *Processor) Process(event events.Event) error {
 }
 
 func (p *Processor) processMessage(event events.Event) error {
+	slog.Info("Processing message...")
+
 	var errMsg = "can't process a message"
 
 	metaInfo, err := meta(event)
@@ -52,6 +54,7 @@ func (p *Processor) processMessage(event events.Event) error {
 		slog.Error("meta func worked unexpectedly", "error: ", err)
 		return e.WrapError(errMsg, err)
 	}
+
 	if err := p.doCmd(metaInfo.ChatID, event.Text, metaInfo.UserName); err != nil {
 		slog.Error("doCmd func worked unexpectedly", "error: ", err)
 		return e.WrapError(errMsg, err)
@@ -62,12 +65,13 @@ func (p *Processor) processMessage(event events.Event) error {
 
 func meta(event events.Event) (Meta, error) {
 	res, ok := event.Meta.(Meta)
+	slog.Info("Getting meta information of the message")
 	if !ok {
 		slog.Error(ErrUnknownMetaType.Error())
 		return Meta{}, e.WrapError("can't get meta information", ErrUnknownMetaType)
 	}
 
-	slog.Info("Even is of type of Meta")
+	slog.Info("Got meta information of the message")
 	return res, nil
 }
 

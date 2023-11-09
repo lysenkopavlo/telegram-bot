@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha1"
 	"errors"
+	"fmt"
 	"io"
 
 	"github.com/lysenkopavlo/telegram-bot/internal/helpers/e"
@@ -32,6 +33,6 @@ func (p Page) Hash() (string, error) {
 		return "", e.WrapError("Error while calculating hash: %w", err)
 	}
 
-	return string(h.Sum(nil)), nil
+	return fmt.Sprintf("%x", h.Sum(nil)), nil
 
 }
