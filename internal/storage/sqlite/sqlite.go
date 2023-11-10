@@ -3,6 +3,7 @@ package sqlite
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log/slog"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -65,18 +66,12 @@ func (s *Storage) Save(ctx context.Context, p *storage.Page) error {
 
 // PickRandom picks random page from storage.
 func (s *Storage) PickRandom(ctx context.Context, userName string) (*storage.Page, error) {
-	query := `
-	SELECT url 
-	FROM pages 
-	WHERE user_name = ?
-	ORDERED BY RANDOM() 
-	LIMIT 1
-	`
+	query := `SELECT url FROM pages WHERE user_name = ? ORDER BY RANDOM() LIMIT 1`
 	var resURL string
 	err := s.db.QueryRowContext(ctx, query, userName).Scan(&resURL)
 
 	if err == sql.ErrNoRows {
-		return nil, nil
+		return nil, storage.ErrNoSavedPages
 	}
 
 	if err != nil {
@@ -106,13 +101,14 @@ func (s *Storage) Remove(ctx context.Context, p *storage.Page) error {
 
 // IsExists checks if page exists in storage.
 func (s *Storage) IsExists(ctx context.Context, p *storage.Page) (bool, error) {
-	query := "SELECT COUNT(*) FROM pages WHERE url = ? AND user_name = ?"
+	query := `SELECT COUNT(*) FROM pages WHERE url = ? AND user_name = ?`
+
 	var count int
 
 	err := s.db.QueryRowContext(ctx, query, p.URL, p.UserName).Scan(&count)
 	if err != nil {
 		slog.Error("database insertion", "error", err)
-		return false, storage.ErrNoSavedPages
+		return false, fmt.Errorf("can't check if page exists: %w", err)
 	}
 
 	slog.Info("IsExist function worked as expected")

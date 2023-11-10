@@ -15,7 +15,7 @@ import (
 const (
 	tgBotHost   = "api.telegram.org"
 	batchSize   = 100
-	storagePath = "data/sqlite/pages.db"
+	storagePath = "pages.db"
 )
 
 func main() {
@@ -55,7 +55,7 @@ func mustToken() string {
 	flag.Parse()
 
 	if *token == "" {
-		log.Fatal("Token is not specified")
+		log.Println("Token is not specified")
 	}
 
 	return *token

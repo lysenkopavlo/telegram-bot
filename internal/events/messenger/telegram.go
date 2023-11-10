@@ -19,7 +19,7 @@ type Processor struct {
 func New(client *telegram.Client, storage storage.Storage) *Processor {
 	return &Processor{
 		tgClient: client,
-		//storage:  storage,
+		storage:  storage,
 	}
 }
 

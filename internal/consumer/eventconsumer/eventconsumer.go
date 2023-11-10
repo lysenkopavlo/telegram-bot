@@ -34,7 +34,7 @@ func (c *Consumer) Start() error {
 		// in case no events to be caught
 		if len(gotEvents) == 0 {
 			// wait for 1 second
-			slog.Info("There is no events. Waiting 1 second")
+			slog.Info("There are no events. Waiting 1 second")
 			time.Sleep(1 * time.Second)
 
 			continue
